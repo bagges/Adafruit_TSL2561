@@ -360,7 +360,7 @@ void Adafruit_TSL2561_Unified::getLuminosity (uint16_t *broadband, uint16_t *ir)
     Returns 0 if the sensor is saturated and the values are unreliable.
 */
 /**************************************************************************/
-uint32_t Adafruit_TSL2561_Unified::calculateLux(uint16_t broadband, uint16_t ir)
+float Adafruit_TSL2561_Unified::calculateLux(uint16_t broadband, uint16_t ir)
 {
   unsigned long chScale;
   unsigned long channel1;
@@ -458,15 +458,9 @@ uint32_t Adafruit_TSL2561_Unified::calculateLux(uint16_t broadband, uint16_t ir)
 
   /* Do not allow negative lux value */
   if (temp < 0) temp = 0;
-
-  /* Round lsb (2^(LUX_SCALE-1)) */
-  temp += (1 << (TSL2561_LUX_LUXSCALE-1));
-
-  /* Strip off fractional portion */
-  uint32_t lux = temp >> TSL2561_LUX_LUXSCALE;
-
-  /* Signal I2C had no errors */
-  return lux;
+  
+  /* Do not round lsb and return float */
+  return (float)(temp / pow(2,TSL2561_LUX_LUXSCALE));
 }
 
 /**************************************************************************/

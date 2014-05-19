@@ -178,7 +178,7 @@ class Adafruit_TSL2561_Unified : public Adafruit_Sensor {
   void setIntegrationTime(tsl2561IntegrationTime_t time);
   void setGain(tsl2561Gain_t gain);
   void getLuminosity (uint16_t *broadband, uint16_t *ir);
-  uint32_t calculateLux(uint16_t broadband, uint16_t ir);
+  float calculateLux(uint16_t broadband, uint16_t ir);
   
   /* Unified Sensor API Functions */  
   void getEvent(sensors_event_t*);
